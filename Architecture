@@ -1,0 +1,37 @@
+# Architecture
+
+## Environment
+
+- **Virtualization:** VMware Workstation
+- **Topology:** 2-node Wazuh cluster (1 master manager + 1 worker manager), separate indexer node(s), Wazuh dashboard, and multiple monitored agents (Windows)
+
+ - Manager 1 (Master): Ubuntu 22.04
+ - Manager 2 (Worker): Ubuntu 22.04
+ - Agents: Windows 10, Windows server 2022 endpoint(s)
+
+## Data flow
+
+1. **Agents** (installed on endpoints) collect logs, file integrity events, and system telemetry, and forward them to the manager over the encrypted agent-manager protocol (port 1514).
+2. **Wazuh Manager cluster** processes events against the ruleset (built-in + custom rules), applies decoders, and generates alerts. The master node handles cluster synchronization and agent registration; the worker shares the analysis load.
+3. **Wazuh Indexer** (OpenSearch-based) stores and indexes all alert and event data.
+4. **Wazuh Dashboard** provides visualization, alert search, and the interface used for triage.
+5. **VirusTotal integration** runs as an active response / integration hook — when FIM detects a new or modified file, its hash is queried against VirusTotal's API, and a positive detection generates a high-severity alert.
+6. **Automation script** queries the manager/indexer for the past week's alerts, summarizes them by severity/rule/agent, and outputs a report on a scheduled cron job.
+
+## Why a 2-node cluster
+
+A single-manager setup is a single point of failure and doesn't reflect how Wazuh is typically deployed in production. Clustering the manager (master + worker) demonstrates:
+- Load distribution of event processing across nodes
+- Agent failover / registration handling
+- Understanding of Wazuh's cluster key, node configuration, and synchronization process
+
+
+## Ports used
+
+| Port | Purpose |
+|---|---|
+| 1514 | Agent → Manager (encrypted event data) |
+| 1515 | Agent registration |
+| 1516 | Manager cluster communication |
+| 9200 | Indexer (OpenSearch) API |
+| 443 | Dashboard (HTTPS) |
