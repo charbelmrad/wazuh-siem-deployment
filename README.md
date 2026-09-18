@@ -27,7 +27,7 @@ Three custom rules (100030–100032): user account creation, addition to the Adm
 
 Two scripts, both scheduled via cron for Saturday 8:00 AM, both confirmed to fire automatically:
 
-automation/weekly_report.sh — all alerts at level 10+ from the past 7 days
+automation/weekly_report.sh all alerts at level 10+ from the past 7 days
 
 Skills & tools
 
