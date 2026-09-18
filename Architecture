@@ -5,9 +5,9 @@
 - **Virtualization:** VMware Workstation
 - **Topology:** 2-node Wazuh cluster (1 master manager + 1 worker manager), separate indexer node(s), Wazuh dashboard, and multiple monitored agents (Windows)
 
- - Manager 1 (Master): Ubuntu 22.04
- - Manager 2 (Worker): Ubuntu 22.04
- - Agents: Windows 10, Windows server 2022 endpoint(s)
+ - Manager 1 (Master): Ubuntu 22.04, 6 GB RAM.
+ - Manager 2 (Worker): Ubuntu 22.04, 4 GB RAM.
+ - Agents: Windows 10, Windows server 2022 endpoint(s) 4 GB RAM.
 
 ## Data flow
 
