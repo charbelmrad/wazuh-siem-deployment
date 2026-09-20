@@ -8,10 +8,10 @@ Environment
 - wazuh-master  | Indexer node-1, Manager (master role), Dashboard
 - wazuh-worker	| Indexer node-2, Manager (worker role)
 
-2-node indexer cluster, 2-node manager cluster — both verified through repeated status checks
+2-node indexer cluster, 2-node manager cluster both verified through repeated status checks
 Dashboard served over HTTPS on the master node
 
-Agents: host-laptop (Windows 10) and win-server (Windows Server 2022 VM) — both Active
+Agents: host-laptop (Windows 10) and win-server (Windows Server 2022 VM) both Active
 All nodes run on an isolated internal lab network, not exposed externally
 What's built:
 
