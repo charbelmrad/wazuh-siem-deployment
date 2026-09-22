@@ -21,9 +21,9 @@
 ## Why a 2-node cluster
 
 A single-manager setup is a single point of failure and doesn't reflect how Wazuh is typically deployed in production. Clustering the manager (master + worker) demonstrates:
-- Load distribution of event processing across nodes
-- Agent failover / registration handling
-- Understanding of Wazuh's cluster key, node configuration, and synchronization process
+- Load distribution of event processing across nodes.
+- Agent failover / registration handling.
+- Understanding of Wazuh's cluster key, node configuration, and synchronization process.
 
 
 ## Ports used
