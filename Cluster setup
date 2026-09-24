@@ -7,3 +7,36 @@ Deployed the cluster VMs in VMware on a 16GB RAM Windows 10 host
 OS: Ubuntu Server on manager/indexer nodes
 Static internal IPs assigned within an isolated lab network
 Hostnames set and /etc/hosts updated on all nodes to resolve each other by name
+
+2. Indexer cluster:
+bash
+# On indexer node(s)
+# Install Wazuh indexer package
+# Configure opensearch.yml with:
+#   - cluster.name
+#   - node.name
+#   - network.host
+#   - discovery.seed_hosts (other indexer nodes)
+#   - cluster.initial_master_nodes
+
+# Generate and distribute TLS certificates for node-to-node and REST API encryption
+3. Manager cluster (master + worker)
+
+On the master node, /var/ossec/etc/ossec.conf cluster block:
+
+xml
+<cluster>
+  <name>wazuh-lab-cluster</name>
+  <node_name>master-node</node_name>
+  <node_type>master</node_type>
+  <key>REPLACE_WITH_GENERATED_CLUSTER_KEY</key>
+  <port>1516</port>
+  <bind_addr>0.0.0.0</bind_addr>
+  <nodes>
+    <node>MASTER_NODE_IP</node>
+  </nodes>
+  <hidden>no</hidden>
+  <disabled>no</disabled>
+</cluster>
+
+On the worker node, same block but node_type = worker, same cluster key, and <nodes> pointing to the master's IP.
