@@ -1,1 +1,9 @@
+Cluster Setup Notes
 
+Deployment notes for the 2-node Wazuh manager + indexer cluster (wazuh-master / wazuh-worker).
+
+1. Base VM provisioning
+Deployed the cluster VMs in VMware on a 16GB RAM Windows 10 host
+OS: Ubuntu Server on manager/indexer nodes
+Static internal IPs assigned within an isolated lab network
+Hostnames set and /etc/hosts updated on all nodes to resolve each other by name
