@@ -52,9 +52,9 @@ bash
 /var/ossec/bin/cluster_control -l
 
 4. Dashboard
-Connected to the indexer cluster via opensearch_dashboards.yml
-TLS between dashboard and indexer configured using the same cert set
-Verified login and cluster health visible under Server Management → Cluster
+Connected to the indexer cluster via opensearch_dashboards.yml.
+TLS between dashboard and indexer configured using the same cert set.
+Verified login and cluster health visible under Server Management → Cluster.
 
 5. Agent enrollment
 bash
@@ -66,8 +66,8 @@ Confirmed events flowing from both Windows agents before moving to rule customiz
 Confirmed which manager node agents actually report to (wazuh-worker) before debugging "missing" events
 
 6. Validation checklist
- Both manager nodes show in cluster_control -l
- Indexer cluster health is green
- Agents report Active status
- Test alert (e.g., manual file change) appears in dashboard within expected latency
- Services enabled with systemctl enable so they survive a reboot
+ Both manager nodes show in cluster_control -l.
+ Indexer cluster health is green.
+ Agents report Active status.
+ Test alert (e.g., manual file change) appears in dashboard within expected latency.
+ Services enabled with systemctl enable so they survive a reboot.
