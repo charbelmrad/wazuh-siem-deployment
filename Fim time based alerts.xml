@@ -1,0 +1,76 @@
+<!--
+  Custom FIM (File Integrity Monitoring) rules — after-hours escalation.
+
+  Scope: real-time monitoring of C:\FIM on the host-laptop agent, via a
+  dedicated `fim-monitor` agent group (syscheck.conf scoped to that group,
+  not applied globally).
+
+  Logic:
+  These rules are silent (level 0) by default — a change to C:\FIM during
+  normal hours generates a low-noise baseline event but is not treated as
+  suspicious. Outside the 5 PM–8 AM window, the same event is escalated to
+  level 10. A separate correlation rule flags renames, since a rename shows
+  up as a delete+add pair rather than a single syscheck event type.
+
+  Rule IDs: 100022–100027 (custom range, no collision with base ruleset).
+
+  Note: during testing, this window was temporarily widened to 8am-6pm to
+  generate daytime test alerts, then reverted to 5pm-8am on both cluster
+  nodes (wazuh-master and wazuh-worker) after validation.
+-->
+
+<group name="syscheck,fim,time_based,">
+
+  <!-- Baseline: file added to C:\FIM — silent unless after-hours -->
+  <rule id="100022" level="0">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?i)^C:\\FIM\\</field>
+    <field name="event">added</field>
+    <description>File added to monitored FIM directory: $(file).</description>
+    <group>fim_monitor,fim_added,</group>
+  </rule>
+
+  <!-- Baseline: file modified in C:\FIM — silent unless after-hours -->
+  <rule id="100023" level="0">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?i)^C:\\FIM\\</field>
+    <field name="event">modified</field>
+    <description>File modified in monitored FIM directory: $(file).</description>
+    <group>fim_monitor,fim_modified,</group>
+  </rule>
+
+  <!-- Baseline: file deleted from C:\FIM — silent unless after-hours -->
+  <rule id="100024" level="0">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?i)^C:\\FIM\\</field>
+    <field name="event">deleted</field>
+    <description>File deleted from monitored FIM directory: $(file).</description>
+    <group>fim_monitor,fim_deleted,</group>
+  </rule>
+
+  <!-- After-hours escalation: any of the above (100022-100024) outside 8am-5pm -->
+  <rule id="100025" level="10">
+    <if_sid>100022,100023,100024</if_sid>
+    <time>17:01-23:59</time>
+    <description>After-hours file integrity event in C:\FIM: $(file) ($(event)). Outside 5PM-8AM window.</description>
+    <group>fim_time_anomaly,fim_after_hours,</group>
+  </rule>
+
+  <rule id="100026" level="10">
+    <if_sid>100022,100023,100024</if_sid>
+    <time>00:00-07:59</time>
+    <description>After-hours file integrity event in C:\FIM: $(file) ($(event)). Outside 5PM-8AM window.</description>
+    <group>fim_time_anomaly,fim_after_hours,</group>
+  </rule>
+
+  <!-- Correlation rule: rename = delete followed by add on same base filename
+       within a short window. Escalated the same as other after-hours events. -->
+  <rule id="100027" level="10" frequency="1" timeframe="30">
+    <if_matched_sid>100024</if_matched_sid>
+    <if_sid>100022</if_sid>
+    <field name="file" type="pcre2">(?i)^C:\\FIM\\</field>
+    <description>Possible file rename detected in C:\FIM (delete+add pair within 30s): $(file).</description>
+    <group>fim_time_anomaly,fim_renamed,</group>
+  </rule>
+
+</group>
