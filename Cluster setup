@@ -1,6 +1,6 @@
 Cluster Setup Notes
 
-Deployment notes for the 2-node Wazuh manager + indexer cluster (wazuh-master / wazuh-worker).
+Deployment notes for the 2-node Wazuh manager + indexer cluster (wazuh-master / wazuh-worker) + dashboard on the master node.
 
 1. Base VM provisioning
 Deployed the cluster VMs in VMware on a 16GB RAM Windows 10 host.
