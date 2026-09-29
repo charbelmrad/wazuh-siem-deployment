@@ -6,7 +6,7 @@
   not applied globally).
 
   Logic:
-  These rules are silent (level 0) by default — a change to C:\FIM during
+  These rules are silent (level 0) by default a change to C:\FIM during
   normal hours generates a low-noise baseline event but is not treated as
   suspicious. Outside the 5 PM–8 AM window, the same event is escalated to
   level 10. A separate correlation rule flags renames, since a rename shows
