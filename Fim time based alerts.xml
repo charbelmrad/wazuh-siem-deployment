@@ -1,5 +1,5 @@
 <!--
-  Custom FIM (File Integrity Monitoring) rules — after-hours escalation.
+  Custom FIM (File Integrity Monitoring) rules after-hours escalation.
 
   Scope: real-time monitoring of C:\FIM on the host-laptop agent, via a
   dedicated `fim-monitor` agent group (syscheck.conf scoped to that group,
@@ -21,7 +21,7 @@
 
 <group name="syscheck,fim,time_based,">
 
-  <!-- Baseline: file added to C:\FIM — silent unless after-hours -->
+  <!-- Baseline: file added to C:\FIM silent unless after-hours -->
   <rule id="100022" level="0">
     <if_group>syscheck</if_group>
     <field name="file" type="pcre2">(?i)^C:\\FIM\\</field>
@@ -30,7 +30,7 @@
     <group>fim_monitor,fim_added,</group>
   </rule>
 
-  <!-- Baseline: file modified in C:\FIM — silent unless after-hours -->
+  <!-- Baseline: file modified in C:\FIM silent unless after-hours -->
   <rule id="100023" level="0">
     <if_group>syscheck</if_group>
     <field name="file" type="pcre2">(?i)^C:\\FIM\\</field>
@@ -39,7 +39,7 @@
     <group>fim_monitor,fim_modified,</group>
   </rule>
 
-  <!-- Baseline: file deleted from C:\FIM — silent unless after-hours -->
+  <!-- Baseline: file deleted from C:\FIM silent unless after-hours -->
   <rule id="100024" level="0">
     <if_group>syscheck</if_group>
     <field name="file" type="pcre2">(?i)^C:\\FIM\\</field>
