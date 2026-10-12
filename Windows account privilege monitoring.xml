@@ -7,10 +7,10 @@
     - User added to Administrators group   -> rule 100031
     - Account disabled                     -> rule 100032
 
-  (2 additional requested items — Linux user creation and sudoers changes —
+  (2 additional requested items Linux user creation and sudoers changes
   are out of scope: no standalone Linux agent in this environment.)
 
-  Important fix: the first version of these rules fired silently — the
+  Important fix: the first version of these rules fired silently the
   built-in Wazuh ruleset already has generic rules for these Windows Security
   events (60109 = account created, 60154 = added to security group,
   60111 = account disabled), and those built-ins were matching first and
@@ -20,14 +20,14 @@
 
 <group name="windows,authentication,account_management,">
 
-  <!-- New local user account created — overrides built-in rule 60109 -->
+  <!-- New local user account created overrides built-in rule 60109 -->
   <rule id="100030" level="8">
     <if_sid>60109</if_sid>
     <description>New Windows user account created: $(win.eventdata.targetUserName) by $(win.eventdata.subjectUserName).</description>
     <group>account_created,</group>
   </rule>
 
-  <!-- User added to Administrators group — overrides built-in rule 60154 -->
+  <!-- User added to Administrators group overrides built-in rule 60154 -->
   <rule id="100031" level="12">
     <if_sid>60154</if_sid>
     <field name="win.eventdata.targetGroupName" type="pcre2">(?i)administrators</field>
@@ -35,7 +35,7 @@
     <group>privilege_escalation,</group>
   </rule>
 
-  <!-- Account disabled — overrides built-in rule 60111 -->
+  <!-- Account disabled overrides built-in rule 60111 -->
   <rule id="100032" level="9">
     <if_sid>60111</if_sid>
     <description>Windows account disabled: $(win.eventdata.targetUserName) by $(win.eventdata.subjectUserName).</description>
