@@ -21,7 +21,7 @@ Real-time monitoring of a dedicated C:\FIM directory on host-laptop, scoped via 
 
 * Windows account & privilege monitoring
 
-Three custom rules (100030–100032): user account creation, addition to the Administrators group, and account disablement. Rewritten to explicitly override the built-in Wazuh rules that were catching these events first.
+Three custom rules (100030-100032): user account creation, addition to the Administrators group, and account disablement. Rewritten to explicitly override the built-in Wazuh rules that were catching these events first.
 
 * Automated weekly reporting (script-based)
 
