@@ -17,7 +17,7 @@ What's built:
 
 * Custom FIM (File Integrity Monitoring)
 
-Real-time monitoring of a dedicated C:\FIM directory on host-laptop, scoped via a fim-monitor agent group. Custom rule chain (100022–100025) is silent (level 0) by default and escalates to level 10 only during an after-hours window (5 PM–8 AM), covering created/modified/deleted events, plus a correlation rule for renames. Validated end-to-end with an EICAR test file.
+Real-time monitoring of a dedicated C:\FIM directory on host-laptop, scoped via a fim-monitor agent group. Custom rule chain (100022–100025) is silent (level 0) by default and escalates to level 10 only during an after-hours window (5 PM-8 AM), covering created/modified/deleted events, plus a correlation rule for renames. Validated end-to-end with an EICAR test file.
 
 * Windows account & privilege monitoring
 
